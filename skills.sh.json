@@ -10,6 +10,13 @@
       ]
     },
     {
+      "title": "Sync & Data",
+      "description": "Skills for sync engines and data layers that stream Postgres to clients.",
+      "skills": [
+        "electric"
+      ]
+    },
+    {
       "title": "Meta",
       "description": "Skills for authoring and maintaining agent skills.",
       "skills": [

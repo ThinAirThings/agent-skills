@@ -28,6 +28,12 @@ You can also use a skill directly by copying its folder under `skills/` into you
 | --- | --- |
 | [`orpc`](skills/orpc) | [oRPC](https://orpc.dev) (v1) end-to-end type-safe RPC + OpenAPI: contracts, procedures, routers, clients, middleware, metadata, and OpenAPI specs with `@orpc/*`. Corrects common LLM misconceptions (tRPC habits, invented APIs) and falls through to the real oRPC source (`./.repos/orpc`) as ground truth. |
 
+### Sync & Data
+
+| Skill | What it covers |
+| --- | --- |
+| [`electric`](skills/electric) | [Electric](https://electric-sql.com) (`electric-sql/electric`), the Postgres sync engine: Shapes, the HTTP sync protocol, `ShapeStream`/`useShape` (`@electric-sql/client`, `@electric-sql/react`), and the Elixir sync-service. Source-first — vendors the real Electric repo into `./.repos/electric` as ground truth (its API has churned across versions). |
+
 ### Meta
 
 | Skill | What it covers |
