@@ -1,11 +1,31 @@
 ---
 name: orpc
-description: Comprehensive guide for oRPC (v1), the end-to-end type-safe RPC + OpenAPI library. Use when defining contracts, procedures, routers, clients, middleware, metadata, or OpenAPI specs with @orpc/*. Covers correct APIs and corrects common misconceptions from LLM-generated content (tRPC habits, invented APIs).
+description: Comprehensive guide for oRPC (v1), the end-to-end type-safe RPC + OpenAPI library. Use when defining contracts, procedures, routers, clients, middleware, metadata, or OpenAPI specs with @orpc/*. Corrects common misconceptions from LLM-generated content (tRPC habits, invented APIs) and falls through to the real oRPC source (./.repos/orpc) as ground truth for exact signatures and behavior.
 ---
 
 # oRPC Expert Guide
 
 oRPC (OpenAPI Remote Procedure Call) is a TypeScript library for building end-to-end type-safe APIs. A procedure is an input schema + output schema + handler; contract-first development separates the *definition* (`@orpc/contract`) from the *implementation* (`@orpc/server`). Validation accepts any [Standard Schema](https://github.com/standard-schema/standard-schema) library (Zod, Valibot, ArkType, Effect Schema, ...). This skill covers correct v1 usage and addresses common misconceptions from LLM-generated content.
+
+---
+
+## Ground Truth & Research Strategy
+
+The sections below are the curated, correct-by-construction guidance for the common case. For an exact signature, an obscure overload, or a behavior question they don't cover, **read the real oRPC source instead of guessing**.
+
+**Research order:**
+
+1. **This skill first** — the sections below are the default; they correct the mistakes LLMs reliably make with oRPC.
+2. **Codebase patterns second** — if the project already uses oRPC, follow its conventions. (Thinair's house patterns live in the separate `thinair-orpc` skill.)
+3. **Vendored source last** — for source-level confirmation, read `./.repos/orpc/packages/<pkg>/src/`:
+   - `packages/contract/src` — `oc`, the contract builder, `isContractProcedure`
+   - `packages/server/src` — `os`, `implement`, `RPCHandler`, middleware & context
+   - `packages/client/src` — `createORPCClient`, `RPCLink`, `safe` / `isDefinedError`
+   - `packages/openapi/src` — `OpenAPIGenerator`, schema converters
+
+**Setup gate:** before relying on source-level detail, check that `./.repos/orpc` exists at the repo root. If it's missing, set it up via [`references/setup.md`](./references/setup.md) (vendors `github.com/unnoq/orpc` via subtree / submodule / clone). Don't fabricate an API you could confirm in the source.
+
+---
 
 ## Quick Reference
 
@@ -292,3 +312,4 @@ for (const [dotted, proc] of leaves(contract)) {
 - [Error Handling](https://orpc.dev/docs/error-handling) · [Client Error Handling](https://orpc.dev/docs/client/error-handling)
 - [OpenAPI Specification](https://orpc.dev/docs/openapi/openapi-specification) · [Hono Adapter](https://orpc.dev/docs/adapters/hono)
 - [oRPC GitHub](https://github.com/unnoq/orpc) · [Standard Schema](https://github.com/standard-schema/standard-schema)
+- Ground-truth source setup: [`references/setup.md`](./references/setup.md) — vendor oRPC into `./.repos/orpc` for source-level reads

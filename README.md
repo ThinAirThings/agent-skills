@@ -26,13 +26,13 @@ You can also use a skill directly by copying its folder under `skills/` into you
 
 | Skill | What it covers |
 | --- | --- |
-| [`orpc`](skills/orpc) | [oRPC](https://orpc.dev) (v1) end-to-end type-safe RPC + OpenAPI: contracts, procedures, routers, clients, middleware, metadata, and OpenAPI specs with `@orpc/*`. Corrects common LLM misconceptions (tRPC habits, invented APIs). |
+| [`orpc`](skills/orpc) | [oRPC](https://orpc.dev) (v1) end-to-end type-safe RPC + OpenAPI: contracts, procedures, routers, clients, middleware, metadata, and OpenAPI specs with `@orpc/*`. Corrects common LLM misconceptions (tRPC habits, invented APIs) and falls through to the real oRPC source (`./.repos/orpc`) as ground truth. |
 
 ### Meta
 
 | Skill | What it covers |
 | --- | --- |
-| [`create-library-skill`](skills/create-library-skill) | How to author a high-quality library skill (like `orpc`): the proven curated-guide format **plus** vendoring a library's type declarations/source into `references/` so an agent can read ground truth. Ships a `vendor-library.sh` helper. |
+| [`create-library-skill`](skills/create-library-skill) | How to author a high-quality library skill (like `orpc`): the **three-layer pattern** — operating-procedure `SKILL.md`, curated reference guides, and the library's real source vendored into the host repo (`./.repos/<lib>`) as ground truth, with a research-order doctrine. Ships `clone-source.sh` (full source) + `vendor-library.sh` (lightweight `.d.ts`) helpers and a `setup.md` template. |
 
 ## Skill Structure
 
@@ -67,6 +67,7 @@ Keep `description` specific and trigger-oriented — it's the only thing an agen
 ## Conventions
 
 - **Correct the model, don't just document.** Lead with a *Wrong → Correct* table for APIs that LLMs reliably get wrong.
+- **Vendor real source as ground truth.** For libraries you work in deeply, set up `./.repos/<lib>` and give the skill a research strategy (curated guides → codebase → source) so the agent reads real code instead of guessing. See [`create-library-skill`](skills/create-library-skill).
 - **Show the house pattern.** Where a skill has a house-specific usage section, point at real package paths (e.g. `packages/<lib>/`) so generated code matches our stack. Keep anything that names internal paths/identifiers/architecture in the private [`agent-skills-internal`](https://github.com/ThinAirThings/agent-skills-internal) repo instead (see the `orpc` → `thinair-orpc` split).
 - **Say when *not* to use it.** A "When NOT to use X" table keeps agents from over-applying a tool.
 - **Stay version-pinned.** Note the major version the skill targets; flag breaking-change seams.
